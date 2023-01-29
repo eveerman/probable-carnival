@@ -72,10 +72,11 @@ def startParsing(secdef_file):
     data = {}
     i = 0
     for ln in all_secdef:
-        item = '='.join(ln.strip('\x01').split('\x01')).split('=')
+        item = '='.join(ln.split('\x01')).split('=')
         oneln = iter(item)
         data[i] = dict((key,value) for key, value in zip(oneln, oneln) if key in tags_map.keys())
         i += 1
+    #in the end a nested dict is likely entirely pointless for this (nb: suspect that the 1st level may be non-integer? hash map of `numbers` for each nested dict rather than indexed. but 1-to-1 so :shrug:)
     security = []
     products = []
     ge = []
