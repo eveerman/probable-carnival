@@ -32,6 +32,7 @@ def retrieveSecdef():
     server.close()
     
     print("File downloaded, unpacking ...")
+    #differentiation between this and checkFile fun is ... illogical?
     with gzip.open(filename, 'rt') as secdef_data:
         secdef_data = secdef_data.read()
         with open('secdef.dat', 'w') as out:
@@ -45,6 +46,7 @@ def checkFile(secdef_file):
         print("Input File does not exist, attempt download ...")
         retrieveSecdef()
         input_file_exists = path.exists(secdef_file)
+        ## should really actually do something better with this, check for extracted, compare dates. (just `if FTP timestamp newer` is sufficient?)
         if not input_file_exists:
             print("I've borked something :(")
             exit = True
@@ -93,6 +95,7 @@ def startParsing(secdef_file):
 
     securities = []
     for x in security: #this should _probably_ be merged into the loop above
+        ## merged if continuing in this manner ... 
         if x not in securities:
             securities.append(x)
     print("QUESTION 1:")
