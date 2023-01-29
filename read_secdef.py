@@ -28,8 +28,9 @@ def retrieveSecdef():
     except:
         print("Failed to open connection to {host}")
     server.retrbinary('RETR SBEFix/Production/secdef.dat.gz', file.write)
-    server.close()
     server.quit()
+    server.close()
+    
     print("File downloaded, unpacking ...")
     with gzip.open(filename, 'rt') as secdef_data:
         secdef_data = secdef_data.read()
@@ -91,20 +92,29 @@ def startParsing(secdef_file):
     ## for future: learn to use pandas :/
 
     securities = []
-    for x in security:
+    for x in security: #this should _probably_ be merged into the loop above
         if x not in securities:
             securities.append(x)
+    print("QUESTION 1:")
+    print("Found a total of " + str(len(security)) + " securities across " + str(len(securities)) + " different types" )
     for x in securities:
-        print(x)
-        print(security.count(x))
+        print("Security type: " + x + " has count of " + str(security.count(x)) + " instruments.")
 
+    print("\n\n")
+    print("QUESTION 2:")
     for x in set(products):
-        print(x)
-        print(products.count(x))
+        print("Product complex " + x + " has " + str(products.count(x)) + " products found")
 
+
+    print("\n\n")
+    print("QUESTION 3:")
     ge.sort(key = lambda x: datetime.strptime(x['expiry'], '%Y%m'))
     for x in ge[:4]:
-        print(f'{x}')
+        #print(f'{x}')
+        print(x['name'] + " expiring on: " + x['expiry'])
+
+    print("\n\n")
+    print("\n\n")
 
 def main():
     secdef_file = getArgs()
