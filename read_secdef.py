@@ -26,7 +26,7 @@ def retrieveSecdef():
     try:
         server.login()
     except:
-        print("Failed to open connection to {host}")
+        print("Failed to open connection to" + host) #`as e`(?) pass actual error!
     server.retrbinary('RETR SBEFix/Production/secdef.dat.gz', file.write)
     server.quit()
     server.close()
